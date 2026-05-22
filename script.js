@@ -182,29 +182,54 @@ function initParticles() {
 /* ═══════════════════════════════════════════
    MUSIC PLAYER
 ═══════════════════════════════════════════ */
+
 function initMusic() {
-  const btn   = document.getElementById('music-btn');
-  const audio = document.getElementById('bg-audio');
-  if (!btn || !audio) return;
+  const btn = document.getElementById("music-btn");
+  const audio = document.getElementById("bg-audio");
 
-  let playing = false;
+  if (!btn || !audio) {
+    console.log("Audio element missing");
+    return;
+  }
 
-  btn.addEventListener('click', () => {
-    if (playing) {
-      audio.pause();
-      btn.querySelector('.music-label').textContent = 'Play Music';
-      btn.querySelector('.music-icon').textContent  = '♪';
-      btn.classList.remove('is-playing');
-    } else {
-      audio.play().catch(() => {});
-      btn.querySelector('.music-label').textContent = 'Pause Music';
-      btn.querySelector('.music-icon').textContent  = '♬';
-      btn.classList.add('is-playing');
+  btn.addEventListener("click", async () => {
+    try {
+
+      if (audio.paused) {
+
+        await audio.play();
+
+        btn.querySelector(".music-label").textContent =
+          "Pause Music";
+
+        btn.querySelector(".music-icon").textContent =
+          "♬";
+
+        btn.classList.add("is-playing");
+
+      } else {
+
+        audio.pause();
+
+        btn.querySelector(".music-label").textContent =
+          "Play Music";
+
+        btn.querySelector(".music-icon").textContent =
+          "♪";
+
+        btn.classList.remove("is-playing");
+      }
+
+    } catch (err) {
+
+      console.error("Audio error:", err);
+
+      alert(
+        "Music could not play. Check song.mp3 and browser permissions."
+      );
     }
-    playing = !playing;
   });
 }
-
 /* ═══════════════════════════════════════════
    SCROLL REVEAL (IntersectionObserver)
 ═══════════════════════════════════════════ */
