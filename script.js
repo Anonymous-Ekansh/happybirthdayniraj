@@ -186,77 +186,83 @@ function initParticles() {
 
 function initMusic() {
 
-  const btn =
-    document.getElementById('music-btn');
-
   const audio =
-    document.getElementById('bg-audio');
+    document.getElementById("bg-audio");
 
-  if (!btn || !audio) return;
+  const btn =
+    document.getElementById("music-btn");
+
+  if (!audio) return;
 
   audio.volume = 0.55;
 
-  async function autoStart() {
+  async function startMusic() {
 
     try {
 
       await audio.play();
 
-      btn.classList.add('is-playing');
-
-      btn.querySelector('.music-label')
-        .textContent = 'Pause Music';
-
-      btn.querySelector('.music-icon')
-        .textContent = '♬';
+      if(btn){
+        btn.classList.add("is-playing");
+      }
 
     } catch {
 
       document.addEventListener(
-        'click',
-        autoStart,
-        { once: true }
+        "pointerdown",
+        async function unlock(){
+
+          audio.muted = false;
+
+          try{
+            await audio.play();
+
+            if(btn){
+              btn.classList.add(
+                "is-playing"
+              );
+            }
+
+          }catch{}
+
+        },
+        { once:true }
       );
 
     }
 
   }
 
-  autoStart();
+  startMusic();
 
-  btn.addEventListener('click', async () => {
+  if(btn){
 
-    if (audio.paused) {
+    btn.addEventListener(
+      "click",
+      ()=>{
 
-      await audio.play();
+        if(audio.paused){
 
-      btn.classList.add('is-playing');
+          audio.play();
 
-      btn.querySelector('.music-label')
-        .textContent =
-        'Pause Music';
+          btn.classList.add(
+            "is-playing"
+          );
 
-      btn.querySelector('.music-icon')
-        .textContent =
-        '♬';
+        }else{
 
-    } else {
+          audio.pause();
 
-      audio.pause();
+          btn.classList.remove(
+            "is-playing"
+          );
 
-      btn.classList.remove('is-playing');
+        }
 
-      btn.querySelector('.music-label')
-        .textContent =
-        'Play Music';
+      }
+    );
 
-      btn.querySelector('.music-icon')
-        .textContent =
-        '♪';
-
-    }
-
-  });
+  }
 
 }
   /* SCROLL REVEAL (IntersectionObserver)
