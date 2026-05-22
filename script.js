@@ -179,9 +179,87 @@ function initParticles() {
   loop();
 }
 
-/* ═══════════════════════════════════════════ MUSIC PLAYER ═══════════════════════════════════════════ */ function initMusic() { const btn = document.getElementById('music-btn'); const audio = document.getElementById('bg-audio'); if (!btn || !audio) return; let playing = false; btn.addEventListener('click', () => { if (playing) { audio.pause(); btn.querySelector('.music-label').textContent = 'Play Music'; btn.querySelector('.music-icon').textContent = '♪'; btn.classList.remove('is-playing'); } else { audio.play().catch(() => {}); btn.querySelector('.music-label').textContent = 'Pause Music'; btn.querySelector('.music-icon').textContent = '♬'; btn.classList.add('is-playing'); } playing = !playing; }); }
+
 /* ═══════════════════════════════════════════
-   SCROLL REVEAL (IntersectionObserver)
+   AUTO MUSIC + EXISTING BUTTON
+═══════════════════════════════════════════ */
+
+function initMusic() {
+
+  const btn =
+    document.getElementById('music-btn');
+
+  const audio =
+    document.getElementById('bg-audio');
+
+  if (!btn || !audio) return;
+
+  audio.volume = 0.55;
+
+  async function autoStart() {
+
+    try {
+
+      await audio.play();
+
+      btn.classList.add('is-playing');
+
+      btn.querySelector('.music-label')
+        .textContent = 'Pause Music';
+
+      btn.querySelector('.music-icon')
+        .textContent = '♬';
+
+    } catch {
+
+      document.addEventListener(
+        'click',
+        autoStart,
+        { once: true }
+      );
+
+    }
+
+  }
+
+  autoStart();
+
+  btn.addEventListener('click', async () => {
+
+    if (audio.paused) {
+
+      await audio.play();
+
+      btn.classList.add('is-playing');
+
+      btn.querySelector('.music-label')
+        .textContent =
+        'Pause Music';
+
+      btn.querySelector('.music-icon')
+        .textContent =
+        '♬';
+
+    } else {
+
+      audio.pause();
+
+      btn.classList.remove('is-playing');
+
+      btn.querySelector('.music-label')
+        .textContent =
+        'Play Music';
+
+      btn.querySelector('.music-icon')
+        .textContent =
+        '♪';
+
+    }
+
+  });
+
+}
+  /* SCROLL REVEAL (IntersectionObserver)
 ═══════════════════════════════════════════ */
 function initScrollReveal() {
   const io = new IntersectionObserver(
