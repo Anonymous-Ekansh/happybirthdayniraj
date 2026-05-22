@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>50 Years of Excellence — Happy Birthday Papa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@400;600&family=Nunito:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 1: CINEMATIC OPENING
+═══════════════════════════════════════════ -->
+<section id="opening" class="opening-section">
+
+  <!-- Curtain Stage -->
+  <div id="curtain-stage" class="curtain-stage">
+    <div class="curtain curtain-left">
+      <div class="curtain-fold"></div>
+      <div class="curtain-fold"></div>
+      <div class="curtain-fold"></div>
+    </div>
+    <div class="curtain curtain-right">
+      <div class="curtain-fold"></div>
+      <div class="curtain-fold"></div>
+      <div class="curtain-fold"></div>
+    </div>
+    <div class="curtain-top"></div>
+
+    <div class="curtain-center-text">
+      <div class="prelude-line">— Tonight We Celebrate —</div>
+    </div>
+  </div>
+
+  <!-- Reveal Stage -->
+  <div id="reveal-stage" class="reveal-stage">
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="hero-content">
+      <div class="fifty-number" id="fifty-anim">50</div>
+      <div class="hero-divider">
+        <span class="divider-line"></span>
+        <span class="divider-icon">✦</span>
+        <span class="divider-line"></span>
+      </div>
+      <h1 class="hero-title">Happy Birthday<br><em>Papa</em></h1>
+      <p class="hero-sub">Fifty years of wisdom, sacrifice, love and strength.</p>
+
+      <div class="hero-image-card" id="hero-card">
+        <div class="hero-img-wrap">
+          <img id="hero-img" src="" alt="Papa" />
+        </div>
+        <div class="hero-card-glow"></div>
+      </div>
+
+      <button class="music-btn" id="music-btn" title="Play / Pause Music">
+        <span class="music-icon">♪</span>
+        <span class="music-label">Play Music</span>
+      </button>
+    </div>
+
+    <div class="scroll-indicator">
+      <span>Scroll to celebrate</span>
+      <div class="scroll-arrow">↓</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 2: PHOTO MEMORIES
+═══════════════════════════════════════════ -->
+<section id="memories" class="memories-section reveal-section">
+  <div class="section-header">
+    <div class="section-label">A Life Well Lived</div>
+    <h2 class="section-title">Moments We Cherish</h2>
+    <div class="section-subtitle">Every photograph holds a heartbeat of time</div>
+  </div>
+
+  <div class="orbit-container" id="orbit-container">
+    <div class="orbit-ring orbit-ring-1"></div>
+    <div class="orbit-ring orbit-ring-2"></div>
+
+    <!-- Center image -->
+    <div class="orbit-center" id="orbit-center">
+      <div class="orbit-img-wrap">
+        <img id="center-img" src="" alt="Papa - Center" />
+      </div>
+      <div class="orbit-center-glow"></div>
+    </div>
+
+    <!-- Orbiting photos - positioned by JS -->
+    <div class="orbit-photo" id="orbit-p1" data-idx="1"><img src="" alt=""/><div class="orbit-photo-shine"></div></div>
+    <div class="orbit-photo" id="orbit-p2" data-idx="2"><img src="" alt=""/><div class="orbit-photo-shine"></div></div>
+    <div class="orbit-photo" id="orbit-p3" data-idx="3"><img src="" alt=""/><div class="orbit-photo-shine"></div></div>
+    <div class="orbit-photo" id="orbit-p4" data-idx="4"><img src="" alt=""/><div class="orbit-photo-shine"></div></div>
+    <div class="orbit-photo" id="orbit-p5" data-idx="5"><img src="" alt=""/><div class="orbit-photo-shine"></div></div>
+    <div class="orbit-photo" id="orbit-p6" data-idx="6"><img src="" alt=""/><div class="orbit-photo-shine"></div></div>
+    <div class="orbit-photo" id="orbit-p7" data-idx="7"><img src="" alt=""/><div class="orbit-photo-shine"></div></div>
+    <div class="orbit-photo" id="orbit-p8" data-idx="8"><img src="" alt=""/><div class="orbit-photo-shine"></div></div>
+  </div>
+
+  <div class="memories-caption">
+    <em>"In every picture, a story. In every smile, a universe."</em>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 3: POEM
+═══════════════════════════════════════════ -->
+<section id="poem" class="poem-section reveal-section">
+  <div class="poem-backdrop"></div>
+  <div class="poem-inner">
+    <div class="section-header">
+      <div class="section-label">Written with Love</div>
+      <h2 class="section-title">A Tribute in Verse</h2>
+    </div>
+
+    <div class="poem-card glass-card">
+      <div class="poem-deco-top">✦ ✦ ✦</div>
+
+      <div class="poem-stanza reveal-poem-line">
+        <p>He built a home from dreams and sweat and stone,</p>
+        <p>A shelter made of sacrifice and grace—</p>
+        <p>He set aside the seeds he'd always sown</p>
+        <p>So we could find a warmer, brighter place.</p>
+      </div>
+
+      <div class="poem-stanza reveal-poem-line">
+        <p>His quiet hands worked long before the dawn,</p>
+        <p>And never once did he demand his due;</p>
+        <p>Behind each rule, a heart that carried on,</p>
+        <p>A heart of gold in everything he'd do.</p>
+      </div>
+
+      <div class="poem-stanza reveal-poem-line">
+        <p>Each storm he faced with shoulders broad and still,</p>
+        <p>Each mountain crossed to keep his family fed—</p>
+        <p>He gave us wings, though never asked he will,</p>
+        <p>And walked beside the paths where others fled.</p>
+      </div>
+
+      <div class="poem-stanza reveal-poem-line">
+        <p>Today we lift our voices, hearts, and eyes</p>
+        <p>To honour fifty years of love made true.</p>
+        <p>His legacy shines bright in every sunrise—</p>
+        <p><em>Papa, this world is richer — because of you.</em></p>
+      </div>
+
+      <div class="poem-deco-bottom">— With all our love, always —</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 4: TIMELINE
+═══════════════════════════════════════════ -->
+<section id="timeline" class="timeline-section reveal-section">
+  <div class="section-header">
+    <div class="section-label">The Journey</div>
+    <h2 class="section-title">Fifty Years, One Legacy</h2>
+  </div>
+
+  <div class="timeline-track">
+
+    <div class="timeline-item tl-left reveal-tl">
+      <div class="tl-dot">
+        <span class="tl-dot-inner"></span>
+      </div>
+      <div class="tl-card glass-card">
+        <div class="tl-icon">🌅</div>
+        <div class="tl-year">Birth</div>
+        <h3 class="tl-title">A Star Is Born</h3>
+        <p class="tl-desc">A new life began — full of promise, warmth, and the quiet strength that would define everything to come.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item tl-right reveal-tl">
+      <div class="tl-dot">
+        <span class="tl-dot-inner"></span>
+      </div>
+      <div class="tl-card glass-card">
+        <div class="tl-icon">🌱</div>
+        <div class="tl-year">Dreams</div>
+        <h3 class="tl-title">Young & Ambitious</h3>
+        <p class="tl-desc">With curiosity as his compass and determination as his guide, he chased every horizon with open arms.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item tl-left reveal-tl">
+      <div class="tl-dot">
+        <span class="tl-dot-inner"></span>
+      </div>
+      <div class="tl-card glass-card">
+        <div class="tl-icon">💼</div>
+        <div class="tl-year">Career</div>
+        <h3 class="tl-title">The Builder Years</h3>
+        <p class="tl-desc">He turned effort into achievement — not for glory, but to lay a foundation strong enough for all who followed.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item tl-right reveal-tl">
+      <div class="tl-dot">
+        <span class="tl-dot-inner"></span>
+      </div>
+      <div class="tl-card glass-card">
+        <div class="tl-icon">🏠</div>
+        <div class="tl-year">Family</div>
+        <h3 class="tl-title">A Home Full of Love</h3>
+        <p class="tl-desc">He built more than walls — he built belonging. Every sacrifice was a brick in this beautiful life we share.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item tl-center reveal-tl">
+      <div class="tl-dot tl-dot-milestone">
+        <span class="tl-dot-inner"></span>
+      </div>
+      <div class="tl-card glass-card tl-milestone-card">
+        <div class="tl-icon">✨</div>
+        <div class="tl-year milestone-year">50</div>
+        <h3 class="tl-title">The Golden Chapter</h3>
+        <p class="tl-desc">Today we gather to celebrate not just a birthday — but a lifetime of love poured into every single one of us. Here's to you, Papa.</p>
+        <div class="milestone-ribbon">50 Years of Excellence</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 5: WISH WALL
+═══════════════════════════════════════════ -->
+<section id="wishes" class="wishes-section reveal-section">
+  <div class="section-header">
+    <div class="section-label">From the Heart</div>
+    <h2 class="section-title">Birthday Wishes</h2>
+    <div class="section-subtitle">Leave a message for Papa's special day</div>
+  </div>
+
+  <div class="wish-form-wrap glass-card">
+    <input class="wish-input" id="wish-name" type="text" placeholder="Your name" maxlength="40" />
+    <textarea class="wish-textarea" id="wish-text" placeholder="Write your birthday wish for Papa..." maxlength="300" rows="3"></textarea>
+    <button class="wish-submit-btn" id="wish-submit">Send Your Wish ✦</button>
+  </div>
+
+  <div class="wish-wall" id="wish-wall">
+    <!-- Pre-seeded wishes -->
+    <div class="wish-card glass-card wish-preset reveal-wish">
+      <div class="wish-quote">"</div>
+      <p>Papa, you are the mountain we lean on and the light that guides us home. Happy 50th — your strength has built everything we are. We love you endlessly.</p>
+      <div class="wish-author">— Your Family ❤️</div>
+    </div>
+    <div class="wish-card glass-card wish-preset reveal-wish">
+      <div class="wish-quote">"</div>
+      <p>Fifty years of grace, patience, and giving. You taught us that love isn't just a feeling — it's showing up every single day. Thank you for showing up, always.</p>
+      <div class="wish-author">— With Love</div>
+    </div>
+    <div class="wish-card glass-card wish-preset reveal-wish">
+      <div class="wish-quote">"</div>
+      <p>To the man who turned every difficulty into a lesson and every loss into wisdom — may this new chapter be filled only with joy, health, and well-deserved rest.</p>
+      <div class="wish-author">— Your Children</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer class="site-footer">
+  <div class="footer-fifty">50</div>
+  <div class="footer-text">
+    <span class="footer-name">Happy Birthday, Papa</span>
+    <span class="footer-sub">23 May 2026 · Made with love</span>
+  </div>
+  <div class="footer-hearts">♡ ♡ ♡</div>
+</footer>
+
+<!-- Audio (user must place song.mp3 in same folder) -->
+<audio id="bg-audio" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Confetti canvas overlay -->
+<canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+
+<script src="imagedata.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
