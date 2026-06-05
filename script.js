@@ -14,13 +14,14 @@ import { getDatabase, ref, push, onValue, query, orderByChild }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 const firebaseConfig = {
-  apiKey:            "YOUR_API_KEY",
-  authDomain:        "YOUR_PROJECT.firebaseapp.com",
-  databaseURL:       "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
-  projectId:         "YOUR_PROJECT_ID",
-  storageBucket:     "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId:             "YOUR_APP_ID"
+  apiKey: "AIzaSyBQJiJR5Uk8Ypn_T33D5ln2XXH2kFcWH34",
+  authDomain: "happybirthdayniraj.firebaseapp.com",
+  databaseURL: "https://happybirthdayniraj-default-rtdb.firebaseio.com",
+  projectId: "happybirthdayniraj",
+  storageBucket: "happybirthdayniraj.firebasestorage.app",
+  messagingSenderId: "1097481053048",
+  appId: "1:1097481053048:web:1f0bd8d7e3199c1acb9e8d",
+  measurementId: "G-WXHN2CEG5P"
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
