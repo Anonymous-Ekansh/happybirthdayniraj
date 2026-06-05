@@ -5,6 +5,28 @@
 
 'use strict';
 
+/* ─── FIREBASE CONFIG ───────────────────────
+   Replace these values with your own from:
+   Firebase Console → Project Settings → Your App
+────────────────────────────────────────────── */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, push, onValue, query, orderByChild }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey:            "YOUR_API_KEY",
+  authDomain:        "YOUR_PROJECT.firebaseapp.com",
+  databaseURL:       "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
+  projectId:         "YOUR_PROJECT_ID",
+  storageBucket:     "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId:             "YOUR_APP_ID"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const db          = getDatabase(firebaseApp);
+const wishesRef   = ref(db, 'wishes');
+
 /* ─── IMAGE CONFIGURATION ───────────────────
    Since photos were not uploaded, we use the
    images/photo1.jpg … images/photo9.jpg paths.
@@ -44,15 +66,12 @@ document.addEventListener('DOMContentLoaded', () => {
    IMAGES
 ═══════════════════════════════════════════ */
 function initImages() {
-  // Hero image
   const heroImg = document.getElementById('hero-img');
   if (heroImg) heroImg.src = PHOTOS[0];
 
-  // Center orbit image
   const centerImg = document.getElementById('center-img');
   if (centerImg) centerImg.src = PHOTOS[1];
 
-  // Orbit satellite images (orbit-p1 … orbit-p8)
   for (let i = 1; i <= 8; i++) {
     const el = document.getElementById(`orbit-p${i}`);
     if (el) {
@@ -74,43 +93,17 @@ function initCurtain() {
   const heroSub      = document.querySelector('.hero-sub');
   const heroDivider  = document.querySelector('.hero-divider');
 
-  // Step 1 → wait for prelude text animation, then open curtains
-  setTimeout(() => {
-    curtainStage.classList.add('open');
-  }, 1800);
-
-  // Step 2 → fade in reveal stage
-  setTimeout(() => {
-    revealStage.classList.add('visible');
-  }, 2400);
-
-  // Step 3 → animate hero elements
+  setTimeout(() => { curtainStage.classList.add('open'); }, 1800);
+  setTimeout(() => { revealStage.classList.add('visible'); }, 2400);
   setTimeout(() => {
     if (fiftyNum)    fiftyNum.classList.add('show');
     if (heroDivider) heroDivider.classList.add('show');
   }, 3000);
-
-  setTimeout(() => {
-    if (heroTitle) heroTitle.classList.add('show');
-  }, 3300);
-
-  setTimeout(() => {
-    if (heroSub) heroSub.classList.add('show');
-  }, 3600);
-
-  setTimeout(() => {
-    if (heroCard) heroCard.classList.add('show');
-  }, 3900);
-
-  // Step 4 → hide curtain stage entirely (keep DOM clean)
-  setTimeout(() => {
-    curtainStage.classList.add('hidden');
-  }, 4400);
-
-  // Step 5 → burst confetti at reveal
-  setTimeout(() => {
-    burstConfetti(120);
-  }, 3200);
+  setTimeout(() => { if (heroTitle) heroTitle.classList.add('show'); }, 3300);
+  setTimeout(() => { if (heroSub)   heroSub.classList.add('show'); }, 3600);
+  setTimeout(() => { if (heroCard)  heroCard.classList.add('show'); }, 3900);
+  setTimeout(() => { curtainStage.classList.add('hidden'); }, 4400);
+  setTimeout(() => { burstConfetti(120); }, 3200);
 }
 
 /* ═══════════════════════════════════════════
@@ -179,93 +172,48 @@ function initParticles() {
   loop();
 }
 
-
 /* ═══════════════════════════════════════════
    AUTO MUSIC + EXISTING BUTTON
 ═══════════════════════════════════════════ */
-
 function initMusic() {
-
-  const audio =
-    document.getElementById("bg-audio");
-
-  const btn =
-    document.getElementById("music-btn");
-
+  const audio = document.getElementById("bg-audio");
+  const btn   = document.getElementById("music-btn");
   if (!audio) return;
 
   audio.volume = 0.55;
 
   async function startMusic() {
-
     try {
-
       await audio.play();
-
-      if(btn){
-        btn.classList.add("is-playing");
-      }
-
+      if (btn) btn.classList.add("is-playing");
     } catch {
-
-      document.addEventListener(
-        "pointerdown",
-        async function unlock(){
-
-          audio.muted = false;
-
-          try{
-            await audio.play();
-
-            if(btn){
-              btn.classList.add(
-                "is-playing"
-              );
-            }
-
-          }catch{}
-
-        },
-        { once:true }
-      );
-
+      document.addEventListener("pointerdown", async function unlock() {
+        audio.muted = false;
+        try {
+          await audio.play();
+          if (btn) btn.classList.add("is-playing");
+        } catch {}
+      }, { once: true });
     }
-
   }
 
   startMusic();
 
-  if(btn){
-
-    btn.addEventListener(
-      "click",
-      ()=>{
-
-        if(audio.paused){
-
-          audio.play();
-
-          btn.classList.add(
-            "is-playing"
-          );
-
-        }else{
-
-          audio.pause();
-
-          btn.classList.remove(
-            "is-playing"
-          );
-
-        }
-
+  if (btn) {
+    btn.addEventListener("click", () => {
+      if (audio.paused) {
+        audio.play();
+        btn.classList.add("is-playing");
+      } else {
+        audio.pause();
+        btn.classList.remove("is-playing");
       }
-    );
-
+    });
   }
-
 }
-  /* SCROLL REVEAL (IntersectionObserver)
+
+/* ═══════════════════════════════════════════
+   SCROLL REVEAL (IntersectionObserver)
 ═══════════════════════════════════════════ */
 function initScrollReveal() {
   const io = new IntersectionObserver(
@@ -280,10 +228,8 @@ function initScrollReveal() {
     { threshold: 0.12 }
   );
 
-  // Sections
   document.querySelectorAll('.reveal-section').forEach(el => io.observe(el));
 
-  // Timeline items (staggered)
   document.querySelectorAll('.timeline-item').forEach((el, i) => {
     const ioTl = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -296,15 +242,14 @@ function initScrollReveal() {
     ioTl.observe(el);
   });
 
-  // Poem stanzas
   document.querySelectorAll('.poem-stanza').forEach((el, i) => {
-    el.style.opacity = '0';
+    el.style.opacity   = '0';
     el.style.transform = 'translateY(24px)';
     el.style.transition = `opacity 0.8s ease ${i * 0.2}s, transform 0.8s ease ${i * 0.2}s`;
     const ioPm = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
+          entry.target.style.opacity   = '1';
           entry.target.style.transform = 'translateY(0)';
           ioPm.unobserve(entry.target);
         }
@@ -313,7 +258,6 @@ function initScrollReveal() {
     ioPm.observe(el);
   });
 
-  // Wish cards
   observeWishCards();
 }
 
@@ -337,23 +281,21 @@ function initOrbit() {
   if (!container) return;
 
   const orbitPhotos = container.querySelectorAll('.orbit-photo');
-  const count = orbitPhotos.length; // 8
+  const count = orbitPhotos.length;
   let rotationAngle = 0;
-  const ORBIT_RADIUS_RATIO = 0.42; // fraction of container width
+  const ORBIT_RADIUS_RATIO = 0.42;
   let rafId;
 
   function positionPhotos(baseAngle) {
-    const size = container.offsetWidth;
+    const size   = container.offsetWidth;
     const radius = size * ORBIT_RADIUS_RATIO;
     const cx = size / 2;
     const cy = size / 2;
 
     orbitPhotos.forEach((photo, i) => {
       const angle = baseAngle + (i / count) * Math.PI * 2;
-      const x = cx + radius * Math.cos(angle);
-      const y = cy + radius * Math.sin(angle);
-      photo.style.left = `${x}px`;
-      photo.style.top  = `${y}px`;
+      photo.style.left = `${cx + radius * Math.cos(angle)}px`;
+      photo.style.top  = `${cy + radius * Math.sin(angle)}px`;
     });
   }
 
@@ -363,32 +305,30 @@ function initOrbit() {
     rafId = requestAnimationFrame(animate);
   }
 
-  // Pause on hover
   container.addEventListener('mouseenter', () => cancelAnimationFrame(rafId));
   container.addEventListener('mouseleave', () => { rafId = requestAnimationFrame(animate); });
 
-  // Kick off
   positionPhotos(0);
   animate();
 
-  // Re-position on resize
   window.addEventListener('resize', () => positionPhotos(rotationAngle));
 
-  // Hover expand on individual photos
   orbitPhotos.forEach(photo => {
     photo.addEventListener('mouseenter', () => {
-      photo.style.zIndex = '10';
+      photo.style.zIndex    = '10';
       photo.style.transform = 'translate(-50%, -50%) scale(1.35)';
     });
     photo.addEventListener('mouseleave', () => {
-      photo.style.zIndex = '';
+      photo.style.zIndex    = '';
       photo.style.transform = 'translate(-50%, -50%) scale(1)';
     });
   });
 }
 
 /* ═══════════════════════════════════════════
-   WISH WALL
+   WISH WALL — Firebase powered
+   All wishes saved to Firebase Realtime DB
+   and synced live to every visitor's browser
 ═══════════════════════════════════════════ */
 function initWishWall() {
   const submitBtn = document.getElementById('wish-submit');
@@ -397,10 +337,23 @@ function initWishWall() {
   const wall      = document.getElementById('wish-wall');
   if (!submitBtn || !wall) return;
 
-  // Load saved wishes from localStorage
-  const saved = JSON.parse(localStorage.getItem('papaWishes') || '[]');
-  saved.forEach(w => appendWish(w.name, w.text, false));
+  // ── Listen for wishes from Firebase in real-time ──
+  // This fires immediately on load AND whenever anyone
+  // anywhere adds a new wish — all browsers update live.
+  onValue(wishesRef, (snapshot) => {
+    // Remove all previously rendered user wishes (keep preseeded ones)
+    wall.querySelectorAll('.wish-card:not(.wish-preset)').forEach(c => c.remove());
 
+    snapshot.forEach((child) => {
+      const w = child.val();
+      appendWish(w.name, w.text, false);
+    });
+
+    // Re-attach scroll reveal to new cards
+    setTimeout(() => observeWishCards(), 50);
+  });
+
+  // ── Submit a wish → push to Firebase ──
   submitBtn.addEventListener('click', () => {
     const name = nameInput.value.trim();
     const text = textInput.value.trim();
@@ -412,17 +365,17 @@ function initWishWall() {
     }
 
     const displayName = name || 'A Loved One';
-    appendWish(displayName, text, true);
 
-    // Persist
-    const all = JSON.parse(localStorage.getItem('papaWishes') || '[]');
-    all.push({ name: displayName, text });
-    localStorage.setItem('papaWishes', JSON.stringify(all));
+    // Push to Firebase — onValue listener above will render it
+    push(wishesRef, {
+      name:      displayName,
+      text:      text,
+      timestamp: Date.now()
+    });
 
     nameInput.value = '';
     textInput.value = '';
 
-    // Mini confetti burst
     burstConfetti(40);
   });
 }
@@ -433,30 +386,28 @@ function appendWish(name, text, isNew) {
 
   const card = document.createElement('div');
   card.className = 'wish-card glass-card' + (isNew ? ' new-wish' : '');
-
   card.innerHTML = `
     <div class="wish-quote">"</div>
     <p>${escHtml(text)}</p>
     <div class="wish-author">— ${escHtml(name)}</div>
   `;
 
-  // Insert at top (after pre-seeds)
-  const preseeds = wall.querySelectorAll('.wish-preset');
+  // Insert after the last pre-seeded wish
+  const preseeds    = wall.querySelectorAll('.wish-preset');
   const lastPreseed = preseeds[preseeds.length - 1];
   if (lastPreseed && lastPreseed.nextSibling) {
     wall.insertBefore(card, lastPreseed.nextSibling);
   } else {
     wall.appendChild(card);
   }
-
-  if (!isNew) {
-    // Observe for scroll reveal
-    setTimeout(() => observeWishCards(), 50);
-  }
 }
 
 function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return s
+    .replace(/&/g,  '&amp;')
+    .replace(/</g,  '&lt;')
+    .replace(/>/g,  '&gt;')
+    .replace(/"/g,  '&quot;');
 }
 
 /* ═══════════════════════════════════════════
@@ -509,11 +460,10 @@ function burstConfetti(count) {
 
 function loopConfetti() {
   confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-
   confettiPieces = confettiPieces.filter(p => p.alpha > 0.02);
 
   confettiPieces.forEach(p => {
-    p.vy   += 0.22;          // gravity
+    p.vy   += 0.22;
     p.vx   *= 0.995;
     p.x    += p.vx;
     p.y    += p.vy;
@@ -554,7 +504,7 @@ function loopConfetti() {
 }
 
 /* ═══════════════════════════════════════════
-   SMOOTH SCROLL (for any nav/anchor links)
+   SMOOTH SCROLL
 ═══════════════════════════════════════════ */
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -573,7 +523,5 @@ function initSmoothScroll() {
 ═══════════════════════════════════════════ */
 window.addEventListener('scroll', () => {
   const indicator = document.querySelector('.scroll-indicator');
-  if (indicator) {
-    indicator.style.opacity = window.scrollY > 80 ? '0' : '1';
-  }
+  if (indicator) indicator.style.opacity = window.scrollY > 80 ? '0' : '1';
 }, { passive: true });
